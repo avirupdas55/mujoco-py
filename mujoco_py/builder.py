@@ -84,7 +84,7 @@ The easy solution is to `import mujoco_py` _before_ `import glfw`.
     builder = Builder(mujoco_path)
     cext_so_path = builder.get_so_file_path()
 
-    lockpath = os.path.join('/tmp', ''.join(choices(ascii_lowercase+digits,k=10)), 'mujocopy-buildlock')
+    lockpath = os.path.join('/tmp', ''.join(choice(ascii_lowercase+digits) for _ in range(10)), 'mujocopy-buildlock')
 
     with fasteners.InterProcessLock(lockpath):
         mod = None
