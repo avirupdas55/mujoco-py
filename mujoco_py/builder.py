@@ -11,7 +11,7 @@ from importlib.machinery import ExtensionFileLoader
 from os.path import abspath, dirname, exists, join, getmtime
 from random import choice
 from shutil import move
-from string import ascii_lowercase
+from string import ascii_lowercase, digits
 
 import fasteners
 import numpy as np
@@ -84,7 +84,7 @@ The easy solution is to `import mujoco_py` _before_ `import glfw`.
     builder = Builder(mujoco_path)
     cext_so_path = builder.get_so_file_path()
 
-    lockpath = os.path.join(os.path.dirname(cext_so_path), 'mujocopy-buildlock')
+    lockpath = os.path.join('/tmp', ''.join(choices(ascii_lowercase+digits,k=10)), 'mujocopy-buildlock')
 
     with fasteners.InterProcessLock(lockpath):
         mod = None
