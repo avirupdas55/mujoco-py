@@ -1,4 +1,4 @@
-**Status**: Deprecated
+## builder.py modified for correct range usage in temp lockpath creation. Thanks to [Douglas Lowe](https://github.com/douglowe) from UoM Research IT! All changes done in the v2.0.2.8-local_update branch.
 
 ### `mujoco-py` does not support versions of MuJoCo after 2.1.0.
 
