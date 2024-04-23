@@ -84,7 +84,7 @@ The easy solution is to `import mujoco_py` _before_ `import glfw`.
     builder = Builder(mujoco_path)
     cext_so_path = builder.get_so_file_path()
 
-    lockpath = os.path.join('/tmp', ''.join(choice(ascii_lowercase+digits) for _ in range(10)), 'mujocopy-buildlock')
+    lockpath = os.path.join('/tmp', ''.join(choices(ascii_lowercase+digits,k=10)), 'mujocopy-buildlock')
 
     with fasteners.InterProcessLock(lockpath):
         mod = None
@@ -308,13 +308,17 @@ class MacExtensionBuilder(MujocoExtensionBuilder):
 
     def _build_impl(self):
         if not os.environ.get('CC'):
-            # Known-working versions of GCC on mac
-            c_compilers = ['/usr/local/bin/gcc-6',
-                           '/usr/local/bin/gcc-7',
-                           '/usr/local/bin/gcc-8',
-                           '/opt/local/bin/gcc-mp-6',
-                           '/opt/local/bin/gcc-mp-7',
-                           '/opt/local/bin/gcc-mp-8']
+            # Known-working versions of GCC on mac (prefer latest one)
+            c_compilers = [
+                '/usr/local/bin/gcc-9',
+                '/usr/local/bin/gcc-8',
+                '/usr/local/bin/gcc-7',
+                '/usr/local/bin/gcc-6',
+                '/opt/local/bin/gcc-mp-9',
+                '/opt/local/bin/gcc-mp-8',
+                '/opt/local/bin/gcc-mp-7',
+                '/opt/local/bin/gcc-mp-6',
+            ]
             available_c_compiler = None
             for c_compiler in c_compilers:
                 if distutils.spawn.find_executable(c_compiler) is not None:
